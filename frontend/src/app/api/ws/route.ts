@@ -3,6 +3,13 @@ import { StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { WebSocket } from "ws";
 
+const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
+
+// Convert HTTP/HTTPS URL to WebSocket URL
+function getWebSocketUrl(baseUrl: string): string {
+  return baseUrl.replace(/^http:/, "ws:").replace(/^https:/, "wss:");
+}
+
 export function GET() {
   const headers = new Headers();
   headers.set("Connection", "Upgrade");
@@ -25,9 +32,10 @@ export async function UPGRADE(
     return;
   }
 
-  const backend = new WebSocket(
-    `ws://localhost:8000/ws/simulate?${new URLSearchParams({ token })}`
-  );
+  const backendUrl = `${getWebSocketUrl(
+    PYTHON_API_URL
+  )}/ws/simulate?${new URLSearchParams({ token })}`;
+  const backend = new WebSocket(backendUrl);
 
   backend.on("error", (error) => {
     console.error("[proxy] backend error:", error);

@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Episode
 from app.auth import verify_token
-from app.env.landing_env import LandingEnv
+from app.rl_env.landing_env import LandingEnv
 from app.agent.ppo_agent import PPOAgent
 import numpy as np
 import logging

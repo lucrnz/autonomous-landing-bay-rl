@@ -2,7 +2,7 @@ import os
 from typing import Optional
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_util import make_vec_env
-from app.env.landing_env import LandingEnv
+from app.rl_env.landing_env import LandingEnv
 
 
 class PPOAgent:

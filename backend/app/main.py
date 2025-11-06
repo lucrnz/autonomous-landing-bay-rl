@@ -5,6 +5,7 @@ from app.routers import auth, episodes, websocket
 import logging
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timezone
 
 # Load environment variables from .env file
 load_dotenv()
@@ -71,5 +72,5 @@ app.include_router(websocket.router)
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    return {"status": "ok"}
+    return {"status": "ok", "timestamp": datetime.now(timezone.utc).isoformat()}
 

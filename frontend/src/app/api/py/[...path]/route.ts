@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-
-const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
+import { env } from "@/env";
 
 export async function GET(
   request: NextRequest,
@@ -47,7 +46,7 @@ async function handleRequest(
     // Get the path from params
     const resolvedParams = await params;
     const path = resolvedParams.path.join("/");
-    const url = `${PYTHON_API_URL}/${path}`;
+    const url = `${env.PYTHON_API_URL}/${path}`;
 
     // Get the JWT token from cookies
     const cookieStore = await cookies();

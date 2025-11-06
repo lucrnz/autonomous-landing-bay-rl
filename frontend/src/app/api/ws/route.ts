@@ -2,8 +2,7 @@ import { waitForSocketClientOpen } from "@/lib/ws";
 import { StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { WebSocket } from "ws";
-
-const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
+import { env } from "@/env";
 
 // Convert HTTP/HTTPS URL to WebSocket URL
 function getWebSocketUrl(baseUrl: string): string {
@@ -33,7 +32,7 @@ export async function UPGRADE(
   }
 
   const backendUrl = `${getWebSocketUrl(
-    PYTHON_API_URL
+    env.PYTHON_API_URL
   )}/ws/simulate?${new URLSearchParams({ token })}`;
   const backend = new WebSocket(backendUrl);
 

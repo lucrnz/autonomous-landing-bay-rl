@@ -3,8 +3,7 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { User, userSchema } from "../schemas";
-
-const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
+import { env } from "@/env";
 
 export async function fetchUser(): Promise<User> {
   const cookieStore = await cookies();
@@ -18,7 +17,7 @@ export async function fetchUser(): Promise<User> {
 
   try {
     // Call Python backend directly with token as Authorization header
-    response = await fetch(`${PYTHON_API_URL}/auth/user`, {
+    response = await fetch(`${env.PYTHON_API_URL}/auth/user`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

@@ -2,8 +2,7 @@
 
 import { cookies } from "next/headers";
 import { z } from "zod";
-
-const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
+import { env } from "@/env";
 
 const responseSchema = z.object({
   token: z.string(),
@@ -12,7 +11,7 @@ const responseSchema = z.object({
 export async function signinAction(email: string, password: string) {
   try {
     // Forward request to Python backend
-    const response = await fetch(`${PYTHON_API_URL}/auth/signin`, {
+    const response = await fetch(`${env.PYTHON_API_URL}/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,11 +1,10 @@
 "use server";
-
-const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
+import { env } from "@/env";
 
 export async function signupAction(email: string, password: string) {
   try {
     // Forward request to Python backend
-    const response = await fetch(`${PYTHON_API_URL}/auth/signup`, {
+    const response = await fetch(`${env.PYTHON_API_URL}/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,16 +16,17 @@ export async function signupAction(email: string, password: string) {
 
     if (!response.ok) {
       // Extract detail from FastAPI error response
-      const errorDetail = (data as { detail?: string | { msg: string }[] }).detail;
+      const errorDetail = (data as { detail?: string | { msg: string }[] })
+        .detail;
       let errorMessage = "Sign up failed";
-      
+
       if (typeof errorDetail === "string") {
         errorMessage = errorDetail;
       } else if (Array.isArray(errorDetail)) {
         // Pydantic validation errors
         errorMessage = errorDetail.map((err) => err.msg).join(", ");
       }
-      
+
       return {
         success: false,
         error: errorMessage,

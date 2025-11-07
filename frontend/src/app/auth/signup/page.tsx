@@ -141,7 +141,7 @@ export default function SignUpPage() {
               className="mt-3 mb-4"
               disabled={
                 loading ||
-                (!turnstileToken && env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+                (!turnstileToken && !!env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
               }
               startIcon={
                 loading ? (

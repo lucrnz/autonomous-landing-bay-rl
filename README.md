@@ -33,6 +33,7 @@ Use it at your own risk there are no guarantees of stability, security, or ongoi
 - **Next.js 16**: React framework with App Router
 - **React Three Fiber**: 3D rendering engine
 - **Material-UI**: Component library
+- **TailwindCSS**: Styling utility library
 - **TanStack Query**: Data fetching and caching
 - **WebSocket API**: Real-time communication
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signupAction } from "@/lib/actions/auth";
+import { env } from "@/env";
 import { passwordSchema } from "@/lib/schemas/password";
 import {
   Container,
@@ -10,11 +11,11 @@ import {
   TextField,
   Button,
   Link,
-  Box,
   Alert,
 } from "@mui/material";
 import DonutLargeRoundedIcon from "@mui/icons-material/DonutLargeRounded";
 import { NextLink } from "@/components/Link";
+import { Turnstile } from "next-turnstile";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -23,6 +24,7 @@ export default function SignUpPage() {
   const [error, setError] = useState("");
   const [passwordFieldInvalid, setPasswordFieldInvalid] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -47,7 +49,14 @@ export default function SignUpPage() {
         return;
       }
 
-      const result = await signupAction(email, password);
+      // Check if Turnstile token is present
+      if (!turnstileToken && env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+        setError("Please complete the captcha verification");
+        setLoading(false);
+        return;
+      }
+
+      const result = await signupAction(email, password, turnstileToken ?? "");
       if (result.success) {
         router.push(
           "/auth/signin?message=Account created successfully, please sign in"
@@ -64,7 +73,7 @@ export default function SignUpPage() {
 
   return (
     <Container maxWidth="sm">
-      <Box className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <Paper className="p-4 w-full">
           <h4 className="text-4xl font-display font-semibold mb-2">
             Create your account
@@ -112,12 +121,28 @@ export default function SignUpPage() {
               margin="normal"
               autoComplete="new-password"
             />
+
+            {env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+              <div className="mx-3 flex justify-center">
+                <Turnstile
+                  siteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
+                  onVerify={(token) => setTurnstileToken(token)}
+                  onError={() => setTurnstileToken(null)}
+                  onExpire={() => setTurnstileToken(null)}
+                  theme="dark"
+                />
+              </div>
+            )}
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               className="mt-3 mb-4"
-              disabled={loading}
+              disabled={
+                loading ||
+                (!turnstileToken && env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+              }
               startIcon={
                 loading ? (
                   <DonutLargeRoundedIcon className="animate-spin delay" />
@@ -126,7 +151,7 @@ export default function SignUpPage() {
             >
               Continue
             </Button>
-            <Box className="flex flex-col items-center justify-center opacity-75 hover:opacity-100 transition-all">
+            <div className="flex flex-col items-center justify-center opacity-75 hover:opacity-100 transition-all">
               <div className="text-center flex flex-row items-center gap-2">
                 {"Already have an account?"}
                 <Link
@@ -137,10 +162,10 @@ export default function SignUpPage() {
                   Sign in
                 </Link>
               </div>
-            </Box>
+            </div>
           </form>
         </Paper>
-      </Box>
+      </div>
     </Container>
   );
 }

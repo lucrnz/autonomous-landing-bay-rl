@@ -1,9 +1,22 @@
 "use server";
-import { env } from "@/env";
 
-export async function signupAction(email: string, password: string) {
+import { env } from "@/env";
+import { verifyTurnstileToken } from "@/lib/catpcha/verify";
+
+export async function signupAction(
+  email: string,
+  password: string,
+  turnstileToken: string
+) {
+  if (!(await verifyTurnstileToken(turnstileToken))) {
+    return {
+      success: false,
+      error: "Invalid captcha verification",
+    };
+  }
+
   try {
-    // Forward request to Python backend
+    // Call Next.js API proxy route which will verify Turnstile and forward to backend
     const response = await fetch(`${env.PYTHON_API_URL}/auth/signup`, {
       method: "POST",
       headers: {

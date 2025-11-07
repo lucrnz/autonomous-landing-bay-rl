@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/env";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 export async function GET(
   request: NextRequest,
@@ -46,6 +47,17 @@ async function handleRequest(
     // Get the path from params
     const resolvedParams = await params;
     const path = resolvedParams.path.join("/");
+
+    // Auth endpoints can only be accessed through Next.js server functions
+    if (path.startsWith("auth/")) {
+      return NextResponse.json(
+        {
+          error: ReasonPhrases.UNAUTHORIZED,
+        },
+        { status: StatusCodes.UNAUTHORIZED }
+      );
+    }
+
     const url = `${env.PYTHON_API_URL}/${path}`;
 
     // Get the JWT token from cookies
@@ -95,8 +107,8 @@ async function handleRequest(
   } catch (error) {
     console.error("Proxy error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
+      { error: ReasonPhrases.INTERNAL_SERVER_ERROR },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }
 }

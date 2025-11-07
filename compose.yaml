@@ -14,7 +14,7 @@ services:
     build:
       context: frontend
     ports:
-      - 3000:3000
+      - ${LISTEN_BIND:-3000}:3000
     environment:
       - PYTHON_API_URL=http://backend:8000
     depends_on:

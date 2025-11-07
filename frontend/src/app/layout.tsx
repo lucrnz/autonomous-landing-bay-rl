@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { env } from "@/env";
 import { theme } from "./theme";
 import { QueryProvider } from "@/components/QueryProvider";
 import StarsBackground from "@/components/StarsBackground";
@@ -23,7 +24,11 @@ export default function RootLayout({
     <QueryProvider>
       <html lang="en">
         <head>
-          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+          <link
+            rel="icon"
+            href={`${env.NEXT_PUBLIC_BASE_PATH}favicon.svg`}
+            type="image/svg+xml"
+          />
         </head>
         <body className="font-body tracking-wide">
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>

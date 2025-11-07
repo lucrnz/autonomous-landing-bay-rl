@@ -26,7 +26,7 @@ export default function RootLayout({
         <head>
           <link
             rel="icon"
-            href={`${env.NEXT_PUBLIC_BASE_PATH}favicon.svg`}
+            href={`${env.NEXT_PUBLIC_BASE_PATH}assets/favicon.svg`}
             type="image/svg+xml"
           />
         </head>

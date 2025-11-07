@@ -1,0 +1,12 @@
+@layer theme, base, mui, components, utilities;
+
+@import "tailwindcss";
+
+:root {
+    --font-fallback: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@theme {
+    --font-display: "Exo 2 Variable", var(--font-fallback);
+    --font-body: "Cabin", var(--font-fallback);
+}

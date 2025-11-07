@@ -5,8 +5,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "./theme";
 import { QueryProvider } from "@/components/QueryProvider";
 import StarsBackground from "@/components/StarsBackground";
-import "@fontsource-variable/exo-2";
 import "./globals.css";
+import "@fontsource-variable/exo-2";
+import "@fontsource-variable/cabin";
 
 export const metadata: Metadata = {
   title: "Autonomous Landing Bay",
@@ -24,8 +25,8 @@ export default function RootLayout({
         <head>
           <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         </head>
-        <body>
-          <AppRouterCacheProvider>
+        <body className="font-body tracking-wide">
+          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <StarsBackground />
             <ThemeProvider theme={theme}>
               <CssBaseline />

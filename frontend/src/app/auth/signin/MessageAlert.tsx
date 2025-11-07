@@ -12,9 +12,8 @@ export default function MessageAlert() {
   }
 
   return (
-    <Alert severity="success" sx={{ mb: 2 }}>
+    <Alert severity="success" className="mb-2">
       {message}
     </Alert>
   );
 }
-

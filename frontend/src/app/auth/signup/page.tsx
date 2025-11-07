@@ -9,33 +9,33 @@ import {
   Paper,
   TextField,
   Button,
-  Typography,
   Link,
   Box,
   Alert,
 } from "@mui/material";
+import DonutLargeRoundedIcon from "@mui/icons-material/DonutLargeRounded";
+import { NextLink } from "@/components/Link";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
+  const [passwordFieldInvalid, setPasswordFieldInvalid] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setPasswordErrors([]);
+    setPasswordFieldInvalid(false);
     setLoading(true);
 
     try {
       // Validate password with Zod
       const passwordValidation = passwordSchema.safeParse(password);
       if (!passwordValidation.success) {
-        const errors = passwordValidation.error.errors.map((err) => err.message);
-        setPasswordErrors(errors);
+        setPasswordFieldInvalid(true);
         setLoading(false);
         return;
       }
@@ -64,40 +64,18 @@ export default function SignUpPage() {
 
   return (
     <Container maxWidth="sm">
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
-            Sign Up
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            sx={{ mb: 3 }}
-          >
-            Create an account with email and password
-          </Typography>
+      <Box className="min-h-screen flex items-center justify-center">
+        <Paper className="p-4 w-full">
+          <h4 className="text-4xl font-display font-semibold mb-2">
+            Create your account
+          </h4>
+          <p className="text-sm text-gray-300 mb-3">
+            Enter your email and password to create your account
+          </p>
 
           {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <Alert severity="error" className="mb-2">
               {error}
-            </Alert>
-          )}
-
-          {passwordErrors.length > 0 && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              <ul style={{ margin: 0, paddingLeft: "20px" }}>
-                {passwordErrors.map((err, idx) => (
-                  <li key={idx}>{err}</li>
-                ))}
-              </ul>
             </Alert>
           )}
 
@@ -122,6 +100,7 @@ export default function SignUpPage() {
               margin="normal"
               autoComplete="new-password"
               helperText="At least 8 characters with uppercase, lowercase, number, and special character"
+              error={passwordFieldInvalid}
             />
             <TextField
               fullWidth
@@ -137,15 +116,27 @@ export default function SignUpPage() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              className="mt-3 mb-4"
               disabled={loading}
+              startIcon={
+                loading ? (
+                  <DonutLargeRoundedIcon className="animate-spin delay" />
+                ) : null
+              }
             >
-              {loading ? "Signing up..." : "Sign Up"}
+              Continue
             </Button>
-            <Box sx={{ textAlign: "center" }}>
-              <Link href="/auth/signin" underline="hover">
-                Already have an account? Sign in
-              </Link>
+            <Box className="flex flex-col items-center justify-center opacity-75 hover:opacity-100 transition-all">
+              <div className="text-center flex flex-row items-center gap-2">
+                {"Already have an account?"}
+                <Link
+                  component={NextLink}
+                  href="/auth/signin"
+                  underline="hover"
+                >
+                  Sign in
+                </Link>
+              </div>
             </Box>
           </form>
         </Paper>

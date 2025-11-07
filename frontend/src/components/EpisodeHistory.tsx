@@ -35,23 +35,23 @@ export default function EpisodeHistory() {
 
   if (isLoading) {
     return (
-      <Paper sx={{ p: 2 }}>
+      <Paper className="p-2">
         <Typography>Loading episodes...</Typography>
       </Paper>
     );
   }
 
   return (
-    <Paper sx={{ p: 2 }}>
-      <Typography variant="h6" gutterBottom>
+    <Paper className="p-2">
+      <h6 className="text-lg font-display font-semibold mb-2">
         Episode History
-      </Typography>
+      </h6>
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+        <Alert severity="error" className="mb-2">
           {error instanceof Error ? error.message : "Failed to fetch episodes"}
         </Alert>
       )}
-      <TableContainer>
+      <TableContainer className="w-full">
         <Table>
           <TableHead>
             <TableRow>

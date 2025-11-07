@@ -56,16 +56,9 @@ export default function DashboardClient({ userPromise }: DashboardClientProps) {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 3,
-        }}
-      >
-        <Typography variant="h4">Dashboard</Typography>
+    <Container maxWidth="lg" className="py-4">
+      <Box className="flex justify-between items-center mb-3">
+        <h4 className="text-4xl font-semibold font-display">Dashboard</h4>
         <Box>
           <Typography variant="body2" sx={{ mr: 2, display: "inline" }}>
             {user.email}
@@ -114,7 +107,7 @@ export default function DashboardClient({ userPromise }: DashboardClientProps) {
               </FormControl>
             </Box>
 
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box className="flex gap-2">
               <Button
                 variant="contained"
                 startIcon={<PlayArrow />}
@@ -133,7 +126,7 @@ export default function DashboardClient({ userPromise }: DashboardClientProps) {
                 Stop
               </Button>
               {isConnected && (
-                <Typography variant="body2" sx={{ alignSelf: "center" }}>
+                <Typography className="self-center">
                   Status: Connected ({mode})
                 </Typography>
               )}
@@ -142,7 +135,7 @@ export default function DashboardClient({ userPromise }: DashboardClientProps) {
             {result && (
               <Alert
                 severity={result.success ? "success" : "error"}
-                sx={{ mt: 2 }}
+                className="mt-2"
               >
                 {result.success ? "Landing successful!" : "Landing failed!"}
                 <br />
@@ -156,7 +149,7 @@ export default function DashboardClient({ userPromise }: DashboardClientProps) {
           <SimulationCanvas state={state} />
 
           {mode === "manual" && (
-            <Box sx={{ mt: 2 }}>
+            <Box className="mt-2">
               <ManualControls onAction={sendAction} disabled={!isConnected} />
             </Box>
           )}

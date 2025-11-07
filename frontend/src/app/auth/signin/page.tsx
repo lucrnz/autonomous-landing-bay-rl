@@ -9,11 +9,12 @@ import {
   Paper,
   TextField,
   Button,
-  Typography,
   Link,
   Box,
   Alert,
 } from "@mui/material";
+import DonutLargeRoundedIcon from "@mui/icons-material/DonutLargeRounded";
+import { NextLink } from "@/components/Link";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -43,33 +44,21 @@ export default function SignInPage() {
 
   return (
     <Container maxWidth="sm">
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
-            Sign In
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            sx={{ mb: 3 }}
-          >
+      <Box className="min-h-screen flex items-center justify-center">
+        <Paper className="p-4 w-full">
+          <h4 className="text-4xl font-display font-semibold mb-2">
+            Welcome Back
+          </h4>
+          <p className="text-sm text-gray-300 mb-3">
             Enter your email and password to sign in
-          </Typography>
+          </p>
 
           <Suspense fallback={null}>
             <MessageAlert />
           </Suspense>
 
           {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <Alert severity="error" className="mb-2">
               {error}
             </Alert>
           )}
@@ -99,16 +88,27 @@ export default function SignInPage() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              className="mt-3 mb-4"
               disabled={loading}
+              startIcon={
+                loading ? (
+                  <DonutLargeRoundedIcon className="animate-spin delay" />
+                ) : null
+              }
             >
-              {loading ? "Signing in..." : "Sign In"}
+              Continue
             </Button>
-            <Box sx={{ textAlign: "center" }}>
-              {"Don't have an account? "}
-              <Link href="/auth/signup" underline="hover">
-                Sign up
-              </Link>
+            <Box className="flex flex-col items-center justify-center opacity-75 hover:opacity-100 transition-all">
+              <div className="text-center flex flex-row items-center gap-2">
+                {"Don't have an account? "}
+                <Link
+                  component={NextLink}
+                  href="/auth/signup"
+                  underline="hover"
+                >
+                  Sign up
+                </Link>
+              </div>
             </Box>
           </form>
         </Paper>

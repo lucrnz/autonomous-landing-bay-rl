@@ -90,7 +90,7 @@ From the `frontend` directory:
 pnpm dev
 ```
 
-The frontend will start on `http://localhost:3000`.
+The frontend will start on `http://localhost:3000/landing-bay-rl/`.
 
 ### Training an Agent
 

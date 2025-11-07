@@ -8,6 +8,11 @@ This project is not intended for production use. It was created solely for demon
 
 Use it at your own risk there are no guarantees of stability, security, or ongoing maintenance.
 
+## Demo
+🚀 You can just try out the app for yourself!
+
+<https://demo.lucdev.net/landing-bay-rl>
+
 ## Features
 
 - **Physics-based landing simulation**: Realistic rocket dynamics with gravity, thrust, fuel consumption, and angular momentum

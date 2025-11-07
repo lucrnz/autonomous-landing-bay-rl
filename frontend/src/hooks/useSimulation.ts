@@ -70,7 +70,6 @@ export function useSimulation(
       };
 
       ws.onmessage = async (event) => {
-        console.log(event.data);
         // Event data is a blob UTF-8 encoded JSON string
         const jsonString =
           typeof event.data === "string"

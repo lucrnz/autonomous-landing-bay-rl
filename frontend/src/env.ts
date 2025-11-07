@@ -26,6 +26,12 @@ export const env = createEnv({
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
   },
 
-  runtimeEnv: process.env,
+  runtimeEnv: {
+    PYTHON_API_URL: process.env.PYTHON_API_URL,
+    TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY,
+    NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+  },
   emptyStringAsUndefined: true,
 });

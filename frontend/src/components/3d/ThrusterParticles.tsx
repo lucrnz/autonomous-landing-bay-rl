@@ -98,15 +98,11 @@ export default function ThrusterParticles({
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={particleCount}
-          array={particles.positions}
-          itemSize={3}
+          args={[particles.positions, 3]}
         />
         <bufferAttribute
           attach="attributes-size"
-          count={particleCount}
-          array={particles.sizes}
-          itemSize={1}
+          args={[particles.sizes, 1]}
         />
       </bufferGeometry>
       <pointsMaterial

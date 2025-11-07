@@ -2,6 +2,7 @@
 
 import { useRef, useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
+import { Line } from "@react-three/drei";
 import * as THREE from "three";
 import Rocket3D from "./Rocket3D";
 import Terrain3D from "./Terrain3D";
@@ -136,14 +137,10 @@ function VelocityVector({
     new THREE.Vector3(endX, endY, position[2]),
   ];
 
-  const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-
   return (
     <group>
       {/* Velocity arrow line */}
-      <line geometry={lineGeometry}>
-        <lineBasicMaterial color="#ff0000" linewidth={3} />
-      </line>
+      <Line points={points} color="#ff0000" lineWidth={3} />
 
       {/* Arrow head */}
       <mesh position={[endX, endY, position[2]]}>

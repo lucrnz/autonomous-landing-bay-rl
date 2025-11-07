@@ -1,5 +1,7 @@
+import { env } from "@/env";
+
 export const fetchEpisodes = async () => {
-  const res = await fetch("/api/py/episodes", {
+  const res = await fetch(`${env.NEXT_PUBLIC_BASE_PATH}api/py/episodes`, {
     method: "GET",
     credentials: "include",
     headers: {

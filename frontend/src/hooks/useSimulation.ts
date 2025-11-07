@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { env } from "@/env";
 
 const getWebSocketUrl = (): string => {
   if (typeof window === "undefined") {
@@ -9,7 +10,8 @@ const getWebSocketUrl = (): string => {
 
   const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
   const host = window.location.host;
-  return `${protocol}//${host}/api/ws`;
+
+  return `${protocol}//${host}${env.NEXT_PUBLIC_BASE_PATH}api/ws`;
 };
 
 interface SimulationState {
